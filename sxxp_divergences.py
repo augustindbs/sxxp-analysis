@@ -347,6 +347,9 @@ def create_gui(securities_data):
                         start, end, span_days = divergence
                         bearish_divergences_list.append((ticker, span_days))
 
+            bullish_divergences_list.sort(key = lambda x: x[1], reverse = True)
+            bearish_divergences_list.sort(key = lambda x: x[1], reverse = True)
+
             if bullish_divergences_list:
                 ttk.Label(frame, text = 'Bullish Divergences:', font = ('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
 
