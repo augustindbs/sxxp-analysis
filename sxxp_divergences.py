@@ -186,7 +186,7 @@ def detect_bearish_divergence(price_extrema, rsi_extrema, window_days, upper_bar
 def plot_graph(ticker, t, extrema_window, divergence_window, upper_barrier, lower_barrier, sma_window_short, sma_window_long, securities_data):
 
     """
-    Plots adjust close price, RSI and volume graphs for a given security.
+    Plots adjusted close price, RSI and volume graphs for a given security.
     """
     
     data = securities_data[ticker][-t:]
