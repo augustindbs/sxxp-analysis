@@ -13,12 +13,12 @@ pd.set_option('display.max_colwidth', None)
 pd.set_option('display.width', 200)
 
 
-sxxp = pd.ExcelFile('data/SXXP_daily_10Y.xlsx')
+sxxp = pd.ExcelFile('bbsp_research/data/sxxp_daily.xlsx')
 securities_data = {}
 securities = sxxp.sheet_names
 
 for security in securities:
-    path = f"./data/pkl/{security}.pkl"
+    path = f"./bbsp_research/data/pkl/{security}.pkl"
     securities_data[security] = pd.read_pickle(path)
 
 for security, df in securities_data.items():
@@ -137,7 +137,7 @@ def detect_bearish_divergence(price_extrema, rsi_extrema, window_days, upper_bar
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-security = random.choice(securities)
+security = 'SAB SM Equity'
 t = 200
 
 data = securities_data[security][-t:]
