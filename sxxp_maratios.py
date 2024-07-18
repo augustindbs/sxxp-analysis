@@ -97,6 +97,7 @@ def plot_graph(ticker):
     ax.set_title(f'{ticker} - Adj Close and SMA141')
     ax.set_xlabel('Date')
     ax.set_ylabel('Price')
+    ax.grid(True, color = 'gray', alpha = 0.2)
     ax.legend()
 
     canvas = FigureCanvasTkAgg(fig, master = frame_graph_plot)
