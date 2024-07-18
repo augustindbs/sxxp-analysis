@@ -10,7 +10,7 @@ pd.set_option('display.max_colwidth', None)
 pd.set_option('display.width', 200)
 
 
-sxxp = pd.ExcelFile('main/data/SXXP_daily_10Y.xlsx')
+sxxp = pd.ExcelFile('main/data/sxxp_daily.xlsx')
 securities_data = {}
 securities = sxxp.sheet_names
 

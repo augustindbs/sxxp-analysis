@@ -137,7 +137,7 @@ def detect_bearish_divergence(price_extrema, rsi_extrema, window_days, upper_bar
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-security = 'ASM.AS'
+security = random.choice(securities)
 t = 200
 
 data = securities_data[security][-t:]

@@ -18,12 +18,12 @@ pd.set_option('display.width', 200)
 # LOADING DATA (FREQUENCY = DAILY IN THE ORIGINAL DATASET)
 
 
-sxxp = pd.ExcelFile('data/SXXP_daily_10Y.xlsx')
+sxxp = pd.ExcelFile('main/data/sxxp_daily.xlsx')
 securities_data = {}
 securities = sxxp.sheet_names
 
 for security in securities:
-    path = f"./data/pkl/{security}.pkl"
+    path = f"./main/data/pkl/{security}.pkl"
     securities_data[security] = pd.read_pickle(path)
 
 for security, df in securities_data.items():
