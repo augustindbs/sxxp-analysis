@@ -78,7 +78,7 @@ def display_all_ratio():
     percentile = 100
     top_ratio = get_top_ratio(percentile)
     result_text = "All SMA141 Ratios:\n"
-    result_text += top_ratio.to_string(index=False)
+    result_text += top_ratio.to_string(index = False)
     text_area_ratio.delete('1.0', tk.END)
     text_area_ratio.insert(tk.END, result_text)
 
@@ -138,7 +138,7 @@ percentile_entry_ratio.pack(pady = 5)
 button_frame = tk.Frame(frame_ratio)
 button_frame.pack(pady = 10)
 
-display_button_ratio = tk.Button(button_frame, text="Display Top Ratios", command = display_top_ratio)
+display_button_ratio = tk.Button(button_frame, text = "Display Top Ratios", command = display_top_ratio)
 display_button_ratio.pack(side = tk.LEFT, padx = 5)
 
 display_button_all = tk.Button(button_frame, text = "Display All", command = display_all_ratio)
