@@ -101,5 +101,3 @@ for security in securities:
             yahoo_ticker = f"{ticker}{yahoo_suffix}"
             sxxp_securities.append(yahoo_ticker)
 
-swedish_securities = [ticker for ticker in sxxp_securities if ticker.endswith('.ST')]
-print("Swedish Securities (ending with '.ST'):", swedish_securities)
