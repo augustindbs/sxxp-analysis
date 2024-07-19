@@ -2,11 +2,11 @@
 import yfinance as yf
 import pandas as pd
 
-sxxp = pd.ExcelFile('data/SXXP_daily_10Y.xlsx')
+sxxp = pd.ExcelFile('main/data/sxxp_daily.xlsx')
 securities = sxxp.sheet_names
 
 
-# PROGRAM TO CONVERT BLOOMBERG TICKERS TO YAHOO FINANCE TICKERS FOR SXXP 600 EQUITIES
+# CONVERT BLOOMBERG TICKERS TO YAHOO FINANCE TICKERS FOR SXXP 600 EQUITIES
 
 
 acronym_mapping = {
@@ -101,9 +101,5 @@ for security in securities:
             yahoo_ticker = f"{ticker}{yahoo_suffix}"
             sxxp_securities.append(yahoo_ticker)
 
-securities_data = {}
-
-for ticker in sxxp_securities:
-    data = yf.download(ticker, period = '1y', interval = '1d')
-    securities_data[ticker] = data
-
+swedish_securities = [ticker for ticker in sxxp_securities if ticker.endswith('.ST')]
+print("Swedish Securities (ending with '.ST'):", swedish_securities)
