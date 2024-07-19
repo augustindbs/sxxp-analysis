@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-sxxp = pd.ExcelFile('main/data/SXXP_daily_10Y.xlsx')
+sxxp = pd.ExcelFile('main/data/sxxp_daily.xlsx')
 securities_data = {}
 securities = sxxp.sheet_names
 
