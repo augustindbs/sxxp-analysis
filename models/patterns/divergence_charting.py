@@ -13,20 +13,12 @@ pd.set_option('display.max_colwidth', None)
 pd.set_option('display.width', 200)
 
 
-<<<<<<< HEAD
 sxxp = pd.ExcelFile('bbsp_research/data/sxxp_daily.xlsx')
-=======
-sxxp = pd.ExcelFile('main/data/sxxp_daily.xlsx')
->>>>>>> origin/main
 securities_data = {}
 securities = sxxp.sheet_names
 
 for security in securities:
-<<<<<<< HEAD
     path = f"./bbsp_research/data/pkl/{security}.pkl"
-=======
-    path = f"./main/data/pkl/{security}.pkl"
->>>>>>> origin/main
     securities_data[security] = pd.read_pickle(path)
 
 for security, df in securities_data.items():
