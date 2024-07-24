@@ -354,13 +354,27 @@ def create_gui(securities_data):
                 ttk.Label(frame, text = 'Bullish Divergences:', font = ('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
 
                 for ticker, span_days, end in bullish_divergences_list:
-                    ttk.Button(frame, text = f'{end[0].strftime("%Y-%m-%d")} - {ticker} - {span_days} Days', command = lambda t = ticker: plot_graph(t, t_val, extrema_window_val, divergence_window_val, upper_barrier_val, lower_barrier_val, sma_short_val, sma_long_val, securities_data)).pack(anchor = 'w', padx = 20)
+                    button_text = f'{end[0].strftime("%Y-%m-%d")} - {ticker} - {span_days} Days'
+                    if span_days < 8:
+                        button_text = "[WEAK] " + button_text
+                    elif 8 <= span_days < 15:
+                        button_text = "[MEDIUM] " + button_text
+                    else:
+                        button_text = "[STRONG] " + button_text
+                    ttk.Button(frame, text=button_text, command = lambda t = ticker: plot_graph(t, t_val, extrema_window_val, divergence_window_val, upper_barrier_val, lower_barrier_val, sma_short_val, sma_long_val, securities_data)).pack(anchor = 'w', padx = 20)
 
             if bearish_divergences_list:
                 ttk.Label(frame, text = 'Bearish Divergences:', font = ('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
 
                 for ticker, span_days, end in bearish_divergences_list:
-                    ttk.Button(frame, text = f'{end[0].strftime("%Y-%m-%d")} - {ticker} - {span_days} Days', command = lambda t = ticker: plot_graph(t, t_val, extrema_window_val, divergence_window_val, upper_barrier_val, lower_barrier_val, sma_short_val, sma_long_val, securities_data)).pack(anchor = 'w', padx = 20)
+                    button_text = f'{end[0].strftime("%Y-%m-%d")} - {ticker} - {span_days} Days'
+                    if span_days < 8:
+                        button_text = "[WEAK] " + button_text
+                    elif 8 <= span_days < 15:
+                        button_text = "[MEDIUM] " + button_text
+                    else:
+                        button_text = "[STRONG] " + button_text
+                    ttk.Button(frame, text = button_text, command = lambda t = ticker: plot_graph(t, t_val, extrema_window_val, divergence_window_val, upper_barrier_val, lower_barrier_val, sma_short_val, sma_long_val, securities_data)).pack(anchor = 'w', padx = 20)
                     
             if not bullish_divergences_list and not bearish_divergences_list:
                 ttk.Label(frame, text = 'No divergences detected within specified parameters.').pack(pady = 10)

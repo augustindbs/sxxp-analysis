@@ -139,7 +139,7 @@ percentile_entry_ratio.pack(pady = 5)
 button_frame = tk.Frame(frame_ratio)
 button_frame.pack(pady = 10)
 
-display_button_ratio = tk.Button(button_frame, text = "Display Top Ratios", command = display_top_ratio)
+display_button_ratio = tk.Button(button_frame, text = "Display Top Ratios (Weekly)", command = display_top_ratio)
 display_button_ratio.pack(side = tk.LEFT, padx = 5)
 
 display_button_all = tk.Button(button_frame, text = "Display All", command = display_all_ratio)
