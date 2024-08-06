@@ -183,6 +183,25 @@ def detect_bearish_divergence(price_extrema, rsi_extrema, window_days, upper_bar
     return bearish_divergences
 
 
+def get_limits(entry_price, risk = 0.02, position_type = 'long'):
+    
+    """
+    Returns stop-loss and take-profit levels given an entry price and a risk percentage to maintain a 1:2 risk-reward ratio.
+    
+    Adjusts the levels based on the position type (long or short).
+    """
+
+    if position_type == 'long':
+        stop_loss = entry_price - (risk * 100)
+        take_profit = entry_price + (risk * 200)
+    
+    elif position_type == 'short':
+        stop_loss = entry_price + (risk * 100)
+        take_profit = entry_price - (risk * 200)
+
+    return stop_loss, take_profit
+
+
 def plot_graph(ticker, t, extrema_window, divergence_window, upper_barrier, lower_barrier, sma_window_short, sma_window_long, securities_data):
 
     """
@@ -218,6 +237,21 @@ def plot_graph(ticker, t, extrema_window, divergence_window, upper_barrier, lowe
     ax1.plot(data.index, data['Adj Close'], label = 'Adjusted Close Price', color = 'black', alpha = 0.9, linewidth = 0.75)
     ax1.plot(data.index, data[f'SMA{sma_window_short}'], label = f'{sma_window_short}-Day SMA', color = 'blue', alpha = 0.7, linewidth = 0.75)
     ax1.plot(data.index, data[f'SMA{sma_window_long}'], label = f'{sma_window_long}-Day SMA', color = 'magenta', alpha = 0.7, linewidth = 0.75)
+    
+    if bullish_divergences:
+        latest_bullish_divergence = max(bullish_divergences, key=lambda div: div[1][0])
+        (price_time_1, price_low_1), (price_time_2, price_low_2), span_days = latest_bullish_divergence
+        stop_loss, take_profit = get_limits(price_low_2, position_type = 'long')
+        ax1.axhline(stop_loss, color = 'red', label = 'Stop Loss (Long)')
+        ax1.axhline(take_profit, color = 'blue', label = 'Take Profit (Long)')
+
+    if bearish_divergences:
+        latest_bearish_divergence = max(bearish_divergences, key=lambda div: div[1][0])
+        (price_time_1, price_high_1), (price_time_2, price_high_2), span_days = latest_bearish_divergence
+        stop_loss, take_profit = get_limits(price_high_2, position_type = 'short')
+        ax1.axhline(stop_loss, color = 'red', label = 'Stop Loss (Short)')
+        ax1.axhline(take_profit, color = 'blue', label = 'Take Profit (Short)')
+
     ax1.set_ylabel('Adjusted Close Price')
     ax1.set_title(f'{ticker} Extrema and Divergence Detection (Daily)', pad = 30)
     ax1.grid(True, color = 'gray', alpha = 0.2)
