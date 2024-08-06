@@ -183,21 +183,24 @@ def detect_bearish_divergence(price_extrema, rsi_extrema, window_days, upper_bar
     return bearish_divergences
 
 
-def get_limits(entry_price, risk = 0.02, position_type = 'long'):
+def get_limits(entry_price, risk = 0.02, reward = 0.06, position_type = 'long'):
     
     """
-    Returns stop-loss and take-profit levels given an entry price and a risk percentage to maintain a 1:2 risk-reward ratio.
-    
+    Returns stop-loss and take-profit levels given an entry price and risk/reward ratios to maintain a specified risk-reward ratio.
+
     Adjusts the levels based on the position type (long or short).
     """
+    
+    stop_loss_distance = entry_price * risk
+    take_profit_distance = entry_price * reward
 
     if position_type == 'long':
-        stop_loss = entry_price - (risk * 100)
-        take_profit = entry_price + (risk * 200)
+        stop_loss = entry_price - stop_loss_distance
+        take_profit = entry_price + take_profit_distance
     
     elif position_type == 'short':
-        stop_loss = entry_price + (risk * 100)
-        take_profit = entry_price - (risk * 200)
+        stop_loss = entry_price + stop_loss_distance
+        take_profit = entry_price - take_profit_distance
 
     return stop_loss, take_profit
 
@@ -239,18 +242,28 @@ def plot_graph(ticker, t, extrema_window, divergence_window, upper_barrier, lowe
     ax1.plot(data.index, data[f'SMA{sma_window_long}'], label = f'{sma_window_long}-Day SMA', color = 'magenta', alpha = 0.7, linewidth = 0.75)
     
     if bullish_divergences:
-        latest_bullish_divergence = max(bullish_divergences, key=lambda div: div[1][0])
+        latest_bullish_divergence = max(bullish_divergences, key = lambda div: div[1][0])
         (price_time_1, price_low_1), (price_time_2, price_low_2), span_days = latest_bullish_divergence
         stop_loss, take_profit = get_limits(price_low_2, position_type = 'long')
-        ax1.axhline(stop_loss, color = 'red', label = 'Stop Loss (Long)')
-        ax1.axhline(take_profit, color = 'blue', label = 'Take Profit (Long)')
+
+        ax1.axhline(stop_loss, color = 'red')
+        ax1.axhline(take_profit, color = 'blue')
+    
+        text_offset = 0.01 * (data['Adj Close'].max() - data['Adj Close'].min())
+        ax1.text(data.index[1], stop_loss + text_offset, 'Stop Loss', color = 'red', verticalalignment = 'bottom')
+        ax1.text(data.index[1], take_profit + text_offset, 'Take Profit', color = 'blue', verticalalignment = 'bottom')
 
     if bearish_divergences:
-        latest_bearish_divergence = max(bearish_divergences, key=lambda div: div[1][0])
+        latest_bearish_divergence = max(bearish_divergences, key = lambda div: div[1][0])
         (price_time_1, price_high_1), (price_time_2, price_high_2), span_days = latest_bearish_divergence
         stop_loss, take_profit = get_limits(price_high_2, position_type = 'short')
-        ax1.axhline(stop_loss, color = 'red', label = 'Stop Loss (Short)')
-        ax1.axhline(take_profit, color = 'blue', label = 'Take Profit (Short)')
+
+        ax1.axhline(stop_loss, color = 'red')
+        ax1.axhline(take_profit, color = 'blue')
+        
+        text_offset = 0.01 * (data['Adj Close'].max() - data['Adj Close'].min())
+        ax1.text(data.index[1], stop_loss + text_offset, 'Stop Loss', color = 'red', verticalalignment = 'bottom')
+        ax1.text(data.index[1], take_profit + text_offset, 'Take Profit', color = 'blue', verticalalignment = 'bottom')
 
     ax1.set_ylabel('Adjusted Close Price')
     ax1.set_title(f'{ticker} Extrema and Divergence Detection (Daily)', pad = 30)
@@ -324,13 +337,13 @@ def detect_divergences(ticker, t, extrema_window, divergence_window, upper_barri
 
 
 def create_gui(securities_data):
-
+    
     """
     Creates GUI window for given security in the given time period.
     """
-   
+    
     def show_divergences():
-
+        
         """
         Shows divergences found for given security in the given time period.
         """
@@ -360,7 +373,6 @@ def create_gui(securities_data):
             canvas.create_window((0, 0), window = frame, anchor = tk.NW)
 
             def on_mousewheel(event):
-                
                 canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
 
             canvas.bind_all("<MouseWheel>", on_mousewheel)
@@ -381,8 +393,8 @@ def create_gui(securities_data):
                         start, end, span_days = divergence
                         bearish_divergences_list.append((ticker, span_days, end))
 
-            bullish_divergences_list.sort(key = lambda x: x[1], reverse = True)
-            bearish_divergences_list.sort(key = lambda x: x[1], reverse = True)
+            bullish_divergences_list.sort(key=lambda x: x[1], reverse = True)
+            bearish_divergences_list.sort(key=lambda x: x[1], reverse = True)
 
             if bullish_divergences_list:
                 ttk.Label(frame, text = 'Bullish Divergences:', font = ('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
@@ -395,10 +407,10 @@ def create_gui(securities_data):
                         button_text = "[MEDIUM] " + button_text
                     else:
                         button_text = "[STRONG] " + button_text
-                    ttk.Button(frame, text=button_text, command = lambda t = ticker: plot_graph(t, t_val, extrema_window_val, divergence_window_val, upper_barrier_val, lower_barrier_val, sma_short_val, sma_long_val, securities_data)).pack(anchor = 'w', padx = 20)
+                    ttk.Button(frame, text=button_text, command=lambda t=ticker: plot_graph(t, t_val, extrema_window_val, divergence_window_val, upper_barrier_val, lower_barrier_val, sma_short_val, sma_long_val, securities_data)).pack(anchor = 'w', padx = 20)
 
             if bearish_divergences_list:
-                ttk.Label(frame, text = 'Bearish Divergences:', font = ('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
+                ttk.Label(frame, text='Bearish Divergences:', font=('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
 
                 for ticker, span_days, end in bearish_divergences_list:
                     button_text = f'{end[0].strftime("%Y-%m-%d")} - {ticker} - {span_days} Days'
@@ -419,10 +431,18 @@ def create_gui(securities_data):
         except ValueError as e:
             tk.messagebox.showerror("Input Error", f"Invalid input: {e}")
 
+    def plot_selected_ticker():
+        
+        """
+        Plots the graph for the selected ticker.
+        """
+        selected_ticker = ticker_listbox.get(tk.ACTIVE)
+        
+        plot_graph(selected_ticker, int(t_entry.get()), int(extrema_window_entry.get()), int(divergence_window_entry.get()), int(upper_barrier_entry.get()), int(lower_barrier_entry.get()), int(sma_short_entry.get()), int(sma_long_entry.get()), securities_data)
 
     root = tk.Tk()
     root.title("Divergence Detection")
-    root.geometry('350x300')
+    root.geometry('350x450')
 
     ttk.Label(root, text = "RSI Upper Barrier:").grid(row = 0, column = 0, padx = 10, pady = (20, 5))
     upper_barrier_entry = ttk.Entry(root)
@@ -461,6 +481,17 @@ def create_gui(securities_data):
 
     show_divergences_button = ttk.Button(root, text = "Detect Divergences", command = show_divergences)
     show_divergences_button.grid(row = 7, column = 0, columnspan = 2, pady = 10)
+
+    ttk.Label(root, text = "Tickers:").grid(row = 8, column = 0, padx = 10, pady = 10)
+    
+    ticker_listbox = tk.Listbox(root, height = 6)
+    ticker_listbox.grid(row = 8, column = 1, padx = 10, pady = 10)
+    
+    for ticker in securities_data.keys():
+        ticker_listbox.insert(tk.END, ticker)
+
+    plot_button = ttk.Button(root, text = "Plot Selected Ticker", command = plot_selected_ticker)
+    plot_button.grid(row = 9, column = 0, columnspan = 2, pady = 10)
 
     root.mainloop()
 
