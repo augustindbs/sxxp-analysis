@@ -27,7 +27,7 @@ def load_data():
     global ticker_data, sxxp_df
 
     for ticker in sxxp_tickers:
-        data = yf.download(ticker, period = '1y', interval = '1d')['Adj Close']
+        data = yf.download(ticker, period = 'max', interval = '1d')['Adj Close']
         ticker_data[ticker] = data
 
     sxxp_df = pd.DataFrame(ticker_data)
