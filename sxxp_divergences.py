@@ -393,8 +393,8 @@ def create_gui(securities_data):
                         start, end, span_days = divergence
                         bearish_divergences_list.append((ticker, span_days, end))
 
-            bullish_divergences_list.sort(key=lambda x: x[1], reverse = True)
-            bearish_divergences_list.sort(key=lambda x: x[1], reverse = True)
+            bullish_divergences_list.sort(key = lambda x: x[1], reverse = True)
+            bearish_divergences_list.sort(key = lambda x: x[1], reverse = True)
 
             if bullish_divergences_list:
                 ttk.Label(frame, text = 'Bullish Divergences:', font = ('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
@@ -410,7 +410,7 @@ def create_gui(securities_data):
                     ttk.Button(frame, text=button_text, command=lambda t=ticker: plot_graph(t, t_val, extrema_window_val, divergence_window_val, upper_barrier_val, lower_barrier_val, sma_short_val, sma_long_val, securities_data)).pack(anchor = 'w', padx = 20)
 
             if bearish_divergences_list:
-                ttk.Label(frame, text='Bearish Divergences:', font=('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
+                ttk.Label(frame, text = 'Bearish Divergences:', font = ('Helvetica', 12, 'bold')).pack(pady = (20, 10), padx = 20, anchor = 'w')
 
                 for ticker, span_days, end in bearish_divergences_list:
                     button_text = f'{end[0].strftime("%Y-%m-%d")} - {ticker} - {span_days} Days'
