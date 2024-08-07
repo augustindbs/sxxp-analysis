@@ -24,7 +24,7 @@ for ticker in sxxp_tickers:
     securities_data[ticker] = data
 
 for ticker, df in securities_data.items():
-    indicator_sma = SMAIndicator(df['Adj Close'], window = 141, fillna = True)
+    indicator_sma = SMAIndicator(df['Adj Close'], window = 141, fillna = False)
     df['SMA141'] = indicator_sma.sma_indicator()
     df['Ratio'] = df['Adj Close'] / df['SMA141']
     securities_data[ticker] = df
