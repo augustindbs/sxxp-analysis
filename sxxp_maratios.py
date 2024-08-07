@@ -116,6 +116,7 @@ def display_graph():
     if ticker in securities_data:
         for widget in frame_graph_plot.winfo_children():
             widget.destroy()
+        
         plot_graph(ticker)
 
     else:
