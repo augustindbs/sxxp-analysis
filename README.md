@@ -1,4 +1,4 @@
-# TA Strategies and Algorithms on STOXX Europe 600 Equities
+# TA Strategies on STOXX Europe 600 Equities
 
 <br/>
 
