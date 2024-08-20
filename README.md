@@ -14,4 +14,4 @@ Some **other useful tools** in the repository include:
 
 <br/>
 
-**Although the algorithms and approach are correct, the backtesting of all these strategies gives no significant results.**
+**Although the algorithms and approach are correct within the technical analysis framework, these strategies yield no significant results during backtesting.**
