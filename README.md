@@ -10,6 +10,8 @@ Some **other useful tools** in the repository include:
 
 - Extrema detection algorithm for close prices using SKLearn
 - Algorithm to identify perceptually important points and slopes in a stock's chart
-- Some work on matrix profiles using the [STUMPY](https://stumpy.readthedocs.io/en/latest/) library
+- Some work on matrix profiles for pattern recognition using the [STUMPY](https://stumpy.readthedocs.io/en/latest/) library
 
-  Although the algorithms and approach are correct, the backtesting of all these strategies gives **no significant results.**
+<br/>
+
+**Although the algorithms and approach are correct, the backtesting of all these strategies gives no significant results.**
