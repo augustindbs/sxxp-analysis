@@ -15,4 +15,4 @@ Some **other useful tools** in the repository include:
 
 <br/>
 
-**Although the algorithms and strategies are correct within the framework of TA, these strategies yield no significant results whatsoever during backtesting.**
+**Although the algorithms and strategies are coherent within the framework of TA, the models yield no statistically significant results whatsoever during backtesting.**
