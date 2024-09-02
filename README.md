@@ -12,7 +12,3 @@ Some **other useful tools** in the repository include:
 - Algorithm to identify perceptually important points and slopes in a stock's chart
 - Some work on matrix profiles for pattern recognition using the [STUMPY](https://stumpy.readthedocs.io/en/latest/) library
 - Program to convert lists of Bloomberg tickers into Yahoo Finance tickers
-
-<br/>
-
-**Although the algorithms and strategies are coherent within the framework of TA, the models yield no statistically significant results whatsoever during backtesting.**
